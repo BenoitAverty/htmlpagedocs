@@ -4,9 +4,15 @@ The framework will contain style info that should stay as-is in most cases (of c
 everything can be overriten, but some things won't be in practice for basic usage).
 
 --- Misc ---
-
 * Paper size
 
+--- Footnotes ---
+* Footnote positionning (float: footnote)
+* Footnote numbering
+
+--- Table Of Contents ---
+* Javascript to generate toc
+* Toc numbering
 
 --- Images ---
 * Classes for images position (center, floating, ...)
@@ -19,9 +25,15 @@ everything can be overriten, but some things won't be in practice for basic usag
 
 ====== THING TO PUT IN THE FRAMEWORK AND TO OVERRIDE IN THEME ======
 
+Things that the framework provides default values for, but that most themes would override.
+
+--- Table Of Contents ---
+* Table of contents styling
+
 --- Titles hierarchy ---
 * Define what corresponds to each html heading level. (e.g for a book : h1 is book title, h2 is part, h3 is chapter)
 * Define layout for headings level (page breaks, String setting for header/footer, ...)
 * Part/Chapter counters
 
 ================ THING TO PUT IN THEME / USER SHEET ================
+
