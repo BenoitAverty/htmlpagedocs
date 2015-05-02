@@ -1,0 +1,27 @@
+================== THINGS TO PUT IN THE FRAMEWORK ==================
+
+The framework will contain style info that should stay as-is in most cases (of course 
+everything can be overriten, but some things won't be in practice for basic usage).
+
+--- Misc ---
+
+* Paper size
+
+
+--- Images ---
+* Classes for images position (center, floating, ...)
+* Classes for images layout (caption)
+* Figure numbering
+
+--- Tables ---
+* Table numbering
+* Classes for table caption
+
+====== THING TO PUT IN THE FRAMEWORK AND TO OVERRIDE IN THEME ======
+
+--- Titles hierarchy ---
+* Define what corresponds to each html heading level. (e.g for a book : h1 is book title, h2 is part, h3 is chapter)
+* Define layout for headings level (page breaks, String setting for header/footer, ...)
+* Part/Chapter counters
+
+================ THING TO PUT IN THEME / USER SHEET ================
