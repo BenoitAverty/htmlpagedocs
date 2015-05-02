@@ -1,0 +1,11 @@
+htmlpagedocs/ .............................................. Root of the project
+  doc/ .............................................documentation of the project
+  examples/ ........................ Some examples of what can be done. Examples 
+                                   with multiple files are placed in sub-folders
+  framework/ ....................................... Core files of the framework
+    css/ ...................... Core css file (to be included in every document)
+    js/ ............... Core javascript files (to be included in every document)
+  themes/ ..................................... Official themes of the framework
+    htmlpagedocs_book/ ............................. Theme to use to write books
+  tools/ ........................... Various tools used to simplify the workflow
+    FileWatcherSimple/ .............. Watch files and generate pdf automatically
