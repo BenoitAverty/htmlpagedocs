@@ -1,0 +1,27 @@
+# Project name
+NAME=htmlpagedocs
+
+# Command to compile scss files into css
+SASS=sass
+
+# Make command
+MAKE=make
+
+# Path to core module
+CORE=core
+
+# List of themes
+THEMES=themes/htmlpagedocs_book/
+
+# package target is the main thing. Builds a nice tgz containing all that's 
+# needed to start writing.
+package: $(CORE) $(THEMES)
+	tar -cvf bla
+
+themes/%/: themes/%/css/%.css themes/%/js/%.js
+
+$(CORE): $(CORE)/css/$(NAME).css $(CORE)/js/$(NAME).js
+
+# Rule for building css
+%.css: %.scss
+	$(SASS) $^ $@
