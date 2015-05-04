@@ -1,6 +1,6 @@
 
 ourcats.pdf: ourcats.html css/ourcats.css htmlpagedocs_core htmlpagedocs_book
-	prince.exe -o ourcats.pdf ourcats.html
+	prince -o ourcats.pdf ourcats.html
 
 htmlpagedocs_core: ../../core/css/htmlpagedocs.css ../../core/js/htmlpagedocs.js
 
