@@ -16,9 +16,9 @@ THEMES=themes/htmlpagedocs_book/
 # package target is the main thing. Builds a nice tgz containing all that's 
 # needed to start writing.
 package: $(CORE) $(THEMES)
-	tar -cvf bla
+	echo "package"
 
-themes/%/: themes/%/css/%.css themes/%/js/%.js
+themes/htmlpagedocs_book/: themes/htmlpagedocs_book/css/htmlpagedocs_book.css themes/htmlpagedocs_book/js/htmlpagedocs_book.js
 
 $(CORE): $(CORE)/css/$(NAME).css $(CORE)/js/$(NAME).js
 

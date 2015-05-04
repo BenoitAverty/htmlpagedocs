@@ -1,6 +1,6 @@
 
 ourcats.pdf: ourcats.html css/ourcats.css htmlpagedocs_core htmlpagedocs_book
-	C:\Program Files (x86)\Prince\Engine\bin\prince.exe -o ourcats.pdf ourcats.html
+	prince.exe -o ourcats.pdf ourcats.html
 
 htmlpagedocs_core: ../../core/css/htmlpagedocs.css ../../core/js/htmlpagedocs.js
 
