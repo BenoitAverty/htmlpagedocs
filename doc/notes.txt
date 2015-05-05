@@ -5,6 +5,10 @@ everything can be overriten, but some things won't be in practice for basic usag
 
 --- Misc ---
 * Paper size
+* "includes"
+
+--- Sectioning ---
+* Frontmatter, mainmatter, backmatter
 
 --- Footnotes ---
 * Footnote positionning (float: footnote)
@@ -22,6 +26,11 @@ everything can be overriten, but some things won't be in practice for basic usag
 --- Tables ---
 * Table numbering
 * Classes for table caption
+
+--- Referencing ---
+* Method for creating anchors
+* Automatic anchors on heandings ?
+* Numbering of reference.
 
 ====== THING TO PUT IN THE FRAMEWORK AND TO OVERRIDE IN THEME ======
 

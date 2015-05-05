@@ -5,6 +5,20 @@ $page-width: 210mm;
 $page-height: 297mm;
 $page-margin: 20mm;
 
+// Colors
+$main-text-color: black;
+$secondary-text-color: #333;
+
+// font
+$main-font-size: 11pt;
+
+/**
+ * General info
+ */
+* {
+  font-size: $main-font-size;
+}
+
 /**
  * Default Page information 
  */
@@ -15,25 +29,13 @@ $page-margin: 20mm;
 
 /* Allow html do define precisely a page. */
 .page {
-  width: $page-width;
-  height: $page-height;
+  width: $page-width - 2*$page-margin;
+  height: $page-height - 2*$page-margin;
+  margin: 0;
+  padding: 0;
   page-break-inside: avoid;
   page-break-before: always;
   page-break-after: always;
-}
-
-/** 
- * HEADING HIERARCHY
- * This defines the heading hierarchy when no theme is used, and styling associated. Default hierarchy is:
- * h1 = Title of the document. There should be only one in the document, usually in the first page (frontpage).
- * h2 = Part. Title will be on its own page.
- * h3 = Section. Will always start on its own page.
- * h4 = Subsection.
- * h5 = Subsubsection.
- * h6 = Paragraph
- */
-h1 {
-  font-size: 1.4em
 }
 
 /**
@@ -52,15 +54,122 @@ h1 {
 
 /* Frontpage */
 .frontpage { 
-  @extend .page
+  @extend .page;
   page: frontpage;
-  width: $page-width; height: $page-height; // .frontpage element should fit on exactly one page.
   margin: 0;
   padding: 0;
 }
 
 @page frontpage {
   //nothing yet...
+}
+
+/** 
+ * HEADING HIERARCHY
+ * This defines the heading hierarchy when no theme is used, and styling associated. Default hierarchy is:
+ * h1 = Title of the document. There should be only one in the document, usually in the first page (frontpage).
+ * h2 = Part. Title will be on its own page.
+ * h3 = Section. Will always start on its own page.
+ * h4 = Subsection.
+ * h5 = Subsubsection.
+ * h6 = Paragraph
+ */
+
+@mixin reset-counters($heading-level) {
+  @if ($heading-level < 6) {
+    counter-reset: paragraph;
+  }
+
+  @if ($heading-level < 5) {
+    counter-reset: subsubsection;
+  }
+
+  @if ($heading-level < 4) {
+    counter-reset: subsection;
+  }
+
+  @if ($heading-level < 3) {
+    counter-reset: section;
+  }
+
+  @if ($heading-level < 2) {
+    counter-reset: part;
+  }
+}
+
+@for $i from 2 through 6 {
+  h#{$i} { @include reset-counters($i) }
+}
+
+h1 {
+  font-size: 2.4em;
+  color: $main-text-color;
+  text-align: center;
+  height: 30%;
+  border-bottom: 2pt solid $main-text-color;
+
+  .subtitle {
+    font-size: 0.8em;
+    color: $secondary-text-color;
+  }
+}
+
+h2, h3, h4, h5 {
+  font-variant: small-caps;
+}
+
+h2 {
+
+  font-size: 1.6em;
+  border-bottom: 1pt solid $main-text-color;
+
+  counter-increment: part;
+  &:before {
+    content: 'Part ' counter(part) '. ';
+  }
+}
+
+h3 {
+  font-size: 1.4em;
+
+  counter-increment: section;
+
+  &:before {
+    content: counter(part) '.' counter(section) '. ';
+  }
+}
+
+h4 {
+  font-size: 1.3em;
+
+  counter-increment: subsection;
+  &:before {
+    content: counter(part) '.' counter(section) '.' counter(subsection) '. ';
+  }
+}
+
+h5 {
+  font-size: 1.2em;
+
+  counter-increment: subsubsection;
+  &:before {
+    content: counter(part) '.' counter(section) '.' counter(subsection) '.' counter(subsubsection) '. ';
+  }
+}
+
+h6 {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 2pt;
+
+  counter-increment: paragraph;
+  &:before {
+    content: counter(part) '.' counter(section) '.' counter(subsection) '.' counter(subsubsection) '.' counter(paragraph) '. ';
+  }
+}
+
+h6 + p {
+  margin-top: 5pt;
 }
 
 
@@ -122,6 +231,6 @@ ul.toc a {
   }
 
   &:after {
-    content: leader('.') target-counter(attr(href), page);
+    content: leader('.') target(attr(href), page);
   }
 }
