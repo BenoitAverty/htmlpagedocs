@@ -1,74 +1,93 @@
 /* Main CSS sheet of HTMLpageDocs. */
 
-/* Rules marked "KEEP" Should probably be kept as a generic rule
-   in the framework rather than in a user/theme stylesheet */
+// Global variables
+$page-width: 210mm;
+$page-height: 297mm;
+$page-margin: 20mm;
 
-/* Page information */
-@page { /* KEEP */
-  size: 210mm 297mm;
-  margin: 20mm;
+/**
+ * Default Page information 
+ */
+@page { 
+  size: $page-width $page-height;
+  margin: $page-margin;
 }
 
-@page landscape { /* KEEP */
-  size: 297mm 210mm landscape;
-  margin: 20mm;
-}
-
-@page frontpage {
-  margin: 0;
-}
-
+/* Allow html do define precisely a page. */
 .page {
-  page-break-after: always;
+  width: $page-width;
+  height: $page-height;
+  page-break-inside: avoid;
   page-break-before: always;
-  width: 210mm;
-  height: 297mm;
+  page-break-after: always;
 }
 
-.page.frontpage { /* KEEP */
-  page: frontpage;
+/** 
+ * HEADING HIERARCHY
+ * This defines the heading hierarchy when no theme is used, and styling associated. Default hierarchy is:
+ * h1 = Title of the document. There should be only one in the document, usually in the first page (frontpage).
+ * h2 = Part. Title will be on its own page.
+ * h3 = Section. Will always start on its own page.
+ * h4 = Subsection.
+ * h5 = Subsubsection.
+ * h6 = Paragraph
+ */
+h1 {
+  font-size: 1.4em
 }
 
-.landscape { /* KEEP */
+/**
+ * Special pages
+ */
+
+/* Landscape page */
+.landscape { 
   page: landscape;
 }
 
-.page > .image-full {
-  width: 100%;
-  height: 100%;
+@page landscape { 
+  size: $page-height $page-width landscape;
+  margin: $page-margin;
 }
 
-h1, h2, h3, h4, h5 {
-  font-weight: bold;
-  page-break-after: avoid;
-  page-break-inside:avoid;
+/* Frontpage */
+.frontpage { 
+  @extend .page
+  page: frontpage;
+  width: $page-width; height: $page-height; // .frontpage element should fit on exactly one page.
+  margin: 0;
+  padding: 0;
 }
 
-h1+p, h2+p, h3+p {
-  page-break-before: avoid;
+@page frontpage {
+  //nothing yet...
 }
 
-table, figure {
-  page-break-inside: avoid;
-}
 
-/* Footnotes */
-.footnote {
-  float: footnote;
-  counter-increment: footnote;
-}
+// .image-full {
+//   width: 100%;
+//   height: 100%;
+// }
 
-.footnote::footnote-call {
-  content: counter(footnote);
-  font-size: 9pt;
-  vertical-align: super;
-  line-height: none;
-}
+// h1, h2, h3, h4, h5 {
+//   font-weight: bold;
+//   page-break-after: avoid;
+//   page-break-inside:avoid;
+// }
 
-.footnote::footnote-marker {
-  font-weight: bold;
-}
+// h1+p, h2+p, h3+p {
+//   page-break-before: avoid;
+// }
 
+// table, figure {
+//   page-break-inside: avoid;
+// }
+
+
+
+/**
+ * Footnotes 
+ */
 @page {
   @footnotes {
     border-top: 0.6pt solid black;
@@ -76,18 +95,33 @@ table, figure {
   }
 }
 
-/* Table of content */
+.footnote {
+  float: footnote;
+  counter-increment: footnote;
+  &::footnote-call {
+    content: counter(footnote);
+    font-size: 9pt;
+    vertical-align: super;
+    line-height: none;
+  }
+
+  &::footnote-marker {
+    font-weight: bold;
+  }
+}
+
+/**
+ * Table of content 
+ */
 ul.toc a {
   text-decoration: none;
   color: black;
-}
+  span {
+    text-decoration: underline;
+    color: blue;
+  }
 
-/* Table of content */
-ul.toc a span {
-  text-decoration: underline;
-  color: blue;
-}
-
-ul.toc a:after {
-  content: leader('.') target-counter(attr(href), page);
+  &:after {
+    content: leader('.') target-counter(attr(href), page);
+  }
 }
