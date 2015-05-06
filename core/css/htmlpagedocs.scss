@@ -222,11 +222,11 @@ h3 {
 /**
  * REFERENCES
  */
-a.reference::after {
-  string-set: ref-page-counter target-counter( attr(href), page);
+a.reference {
+  string-set: test target-counter(attr(href), section);
 
-  .ref-number:before {
-    content: string(ref-page-counter);
+  .ref-content:before {
+    content: string(test);
   }
 }
 

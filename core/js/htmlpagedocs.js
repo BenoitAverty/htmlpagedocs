@@ -1,6 +1,6 @@
 /* Main JS script of HTMLpageDocs */
 
-/* Generate references */
+/* Generate references */ //USELESS
 $(document).ready(function() {
 	var reflinks = $("a.reference");
 
