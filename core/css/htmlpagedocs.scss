@@ -219,6 +219,16 @@ h3 {
   }
 }
 
+/**
+ * REFERENCES
+ */
+a.reference::after {
+  string-set: ref-page-counter target-counter( attr(href), page);
+
+  .ref-number:before {
+    content: string(ref-page-counter);
+  }
+}
 
 
 // .image-full {
