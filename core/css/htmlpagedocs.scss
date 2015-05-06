@@ -20,7 +20,7 @@ $main-font-size: 11pt;
 }
 
 /**
- * Default Page information 
+ * DEFAULT PAGE INFORMATION 
  */
 @page { 
   size: $page-width $page-height;
@@ -39,7 +39,7 @@ $main-font-size: 11pt;
 }
 
 /**
- * Special pages
+ * SPECIAL PAGES
  */
 
 /* Landscape page */
@@ -91,13 +91,9 @@ $main-font-size: 11pt;
   @if ($heading-level < 3) {
     counter-reset: section;
   }
-
-  @if ($heading-level < 2) {
-    counter-reset: part;
-  }
 }
 
-@for $i from 2 through 6 {
+@for $i from 2 through 5 {
   h#{$i} { @include reset-counters($i) }
 }
 
@@ -105,12 +101,10 @@ h1 {
   font-size: 2.4em;
   color: $main-text-color;
   text-align: center;
-  height: 30%;
-  border-bottom: 2pt solid $main-text-color;
+  border-bottom: 2pt solid black;
 
   .subtitle {
-    font-size: 0.8em;
-    color: $secondary-text-color;
+    font-size: 0.9em;
   }
 }
 
@@ -168,9 +162,63 @@ h6 {
   }
 }
 
-h6 + p {
-  margin-top: 5pt;
+/** 
+ * HEADER / FOOTER
+ * The headers/footers do not change for right/left pages by default.
+ */
+
+h2 {
+  string-set: part-title content();
 }
+
+h3 {
+  string-set: section-title content();
+}
+
+@page {
+  @top-left {
+    font-size: 0.8em;
+    content: string(part-title);
+  }
+
+  @top-right {
+    font-size: 0.8em;
+    content: string(section-title);
+  }
+
+  @bottom-center {
+    content: 'Page ' counter(page);
+  }
+}
+
+@page:first {
+  @top-left {
+    content: none;
+  }
+
+  @top-right {
+    content: none;
+  }
+
+  @bottom-center {
+    content: none;
+  }
+}
+
+@page landscape {
+  @top-left {
+    content: none;
+  }
+
+  @top-right {
+    content: none;
+  }
+
+  @bottom-center {
+    content: none;
+  }
+}
+
 
 
 // .image-full {
