@@ -68,35 +68,12 @@ $main-font-size: 11pt;
  * HEADING HIERARCHY
  * This defines the heading hierarchy when no theme is used, and styling associated. Default hierarchy is:
  * h1 = Title of the document. There should be only one in the document, usually in the first page (frontpage).
- * h2 = Part. Title will be on its own page.
+ * h2 = Part.
  * h3 = Section. Will always start on its own page.
  * h4 = Subsection.
  * h5 = Subsubsection.
  * h6 = Paragraph
  */
-
-@mixin reset-counters($heading-level) {
-  @if ($heading-level < 6) {
-    counter-reset: paragraph;
-  }
-
-  @if ($heading-level < 5) {
-    counter-reset: subsubsection;
-  }
-
-  @if ($heading-level < 4) {
-    counter-reset: subsection;
-  }
-
-  @if ($heading-level < 3) {
-    counter-reset: section;
-  }
-}
-
-@for $i from 2 through 5 {
-  h#{$i} { @include reset-counters($i) }
-}
-
 h1 {
   font-size: 2.4em;
   color: $main-text-color;
@@ -105,6 +82,22 @@ h1 {
 
   .subtitle {
     font-size: 0.9em;
+  }
+}
+
+/* At each heading, increment counter for this heading and reset all counters for lower heading levels. */
+@for $i from 2 through 6 {
+  h#{$i} { 
+
+    counter-increment: h#{$i}-counter;
+
+    $counters-to-reset: null;
+    @for $j from 6 to $i {
+      $counters-to-reset: $counters-to-reset h#{$j}-counter;
+    }
+    @if($counters-to-reset) {
+      counter-reset: $counters-to-reset;
+    }
   }
 }
 
@@ -117,37 +110,32 @@ h2 {
   font-size: 1.6em;
   border-bottom: 1pt solid $main-text-color;
 
-  counter-increment: part;
   &:before {
-    content: 'Part ' counter(part) '. ';
+    content: 'Part ' counter(h2-counter) '. ';
   }
 }
 
 h3 {
   font-size: 1.4em;
 
-  counter-increment: section;
-
   &:before {
-    content: counter(part) '.' counter(section) '. ';
+    content: counter(h2-counter) '.' counter(h3-counter) '. ';
   }
 }
 
 h4 {
   font-size: 1.3em;
 
-  counter-increment: subsection;
   &:before {
-    content: counter(part) '.' counter(section) '.' counter(subsection) '. ';
+    content: counter(h2-counter) '.' counter(h3-counter) '.' counter(h4-counter) '. ';
   }
 }
 
 h5 {
   font-size: 1.2em;
 
-  counter-increment: subsubsection;
   &:before {
-    content: counter(part) '.' counter(section) '.' counter(subsection) '.' counter(subsubsection) '. ';
+    content: counter(h2-counter) '.' counter(h3-counter) '.' counter(h4-counter) '.' counter(h5-counter) '. ';
   }
 }
 
@@ -156,9 +144,8 @@ h6 {
   font-weight: bold;
   margin-bottom: 2pt;
 
-  counter-increment: paragraph;
   &:before {
-    content: counter(part) '.' counter(section) '.' counter(subsection) '.' counter(subsubsection) '.' counter(paragraph) '. ';
+    content: counter(h2-counter) '.' counter(h3-counter) '.' counter(h4-counter) '.' counter(h5-counter) '.' counter(h6-counter) '. ';
   }
 }
 
@@ -223,10 +210,31 @@ h3 {
  * REFERENCES
  */
 a.reference {
-  string-set: test target-counter(attr(href), section);
+  string-set: h2-target-counter target-counter(attr(href), h2-counter)
+      h3-target-counter target-counter(attr(href), h3-counter)
+      h4-target-counter target-counter(attr(href), h4-counter)
+      h5-target-counter target-counter(attr(href), h5-counter)
+      h6-target-counter target-counter(attr(href), h6-counter)
+      target-title target-content(attr(href)) //WARNING this works in princeXML, but the function in CSS spec is target-text. Not sure what to do about this...
+  ;
 
+  .ref-part:before {
+    content: string(h2-target-counter);
+  }
+  .ref-section:before {
+    content: string(h2-target-counter) '.' string(h3-target-counter);
+  }
+  .ref-subsection:before {
+    content: string(h2-target-counter) '.' string(h3-target-counter) '.' string(h4-target-counter);
+  }
+  .ref-subsubsection:before {
+    content: string(h2-target-counter) '.' string(h3-target-counter) '.' string(h4-target-counter) '.' string(h5-target-counter);
+  }
+  .ref-paragraph:before {
+    content: string(h2-target-counter) '.' string(h3-target-counter) '.' string(h4-target-counter) '.' string(h5-target-counter) '.' string(h6-target-counter);
+  }
   .ref-content:before {
-    content: string(test);
+    content: string(target-title);
   }
 }
 
